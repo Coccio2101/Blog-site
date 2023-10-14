@@ -42,7 +42,6 @@ async function main() {
     app.get("/", async (req, res) => {
         // get posts from the database
         const posts = await Post.find({}).exec()
-        // Extrapolate the id => JSON.stringify(posts[0]._id)
         res.render("home", {content: homeStartingContent, posts: posts})
     })
 
@@ -66,6 +65,12 @@ async function main() {
                 res.render("post", {postTitle: post.title, postBlog: post.content})
             }
         })
+    })
+
+    app.get("/admin", async (req, res) => {
+        // get posts from the database
+        const posts = await Post.find({}).exec()
+        res.render("admin", {content: homeStartingContent, posts: posts})
     })
 
     // Post requests

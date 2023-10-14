@@ -1,0 +1,16 @@
+<%- include("./partials/header") -%>
+
+<h1>Hello</h1>
+<p><%= content %></p>
+
+<% posts.forEach((post) => { %>
+    <form action="/delete" method="post">
+        <h1><%= post.title %></h1>
+        <p><%= post.content.substring(0, 100) + " ..." %>
+            <a href="/posts/<%= JSON.stringify(post._id) %>">Read More</a>
+            <button class="btn btn-danger" type="submit" name="postDelete" value="<%= JSON.stringify(post._id) %>"><img class="delete" src="/images/delete.svg" alt=""></button>
+        </p>
+    </form>
+<% }) %>
+
+<%- include("./partials/footer") -%>
