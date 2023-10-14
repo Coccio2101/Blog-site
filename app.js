@@ -42,6 +42,7 @@ async function main() {
     app.get("/", async (req, res) => {
         // get posts from the database
         const posts = await Post.find({}).exec()
+        // Extrapolate the id => JSON.stringify(posts[0]._id)
         res.render("home", {content: homeStartingContent, posts: posts})
     })
 
@@ -57,9 +58,11 @@ async function main() {
         res.render("compose")
     })
 
-    app.get("/posts/:postTitle", (req, res) => {
+    app.get("/posts/:postId", async (req, res) => {
+        const postId = req.params.postId
+        const posts = await Post.find({})
         posts.forEach((post) => {
-            if (_.lowerCase(req.params.postTitle) === _.lowerCase(post.title)) {
+            if (postId === JSON.stringify(post._id)) {
                 res.render("post", {postTitle: post.title, postBlog: post.content})
             }
         })
