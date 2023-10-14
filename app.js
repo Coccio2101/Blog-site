@@ -84,6 +84,20 @@ async function main() {
         res.redirect("/")
     })
 
+    app.post("/delete", async (req, res) => {
+        const postDeleteId = req.body.postDelete
+
+        const posts = await Post.find({}).exec()
+        posts.forEach(async (post) => {
+            if (postDeleteId === JSON.stringify(post._id)) {
+                await Post.deleteOne({_id: post._id})
+                console.log("An item has been removed")
+            }
+        })
+
+        res.redirect("/admin")
+    })
+
 
 
     // Server listen
